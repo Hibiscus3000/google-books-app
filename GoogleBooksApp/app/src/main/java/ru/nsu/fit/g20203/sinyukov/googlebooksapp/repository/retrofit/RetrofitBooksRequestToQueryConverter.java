@@ -1,11 +1,12 @@
-package ru.nsu.fit.g20203.sinyukov.googlebooksapp.network.repository.retrofit;
+package ru.nsu.fit.g20203.sinyukov.googlebooksapp.repository.retrofit;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import ru.nsu.fit.g20203.sinyukov.googlebooksapp.network.request.BooksRequest;
+import ru.nsu.fit.g20203.sinyukov.googlebooksapp.request.PagedVolumesRequest;
+import ru.nsu.fit.g20203.sinyukov.googlebooksapp.request.VolumesRequest;
 
 public class RetrofitBooksRequestToQueryConverter {
 
@@ -20,10 +21,10 @@ public class RetrofitBooksRequestToQueryConverter {
     private static final String PAIRS_DELIMITER = "+";
     private static final String KEY_VALUE_DELIMITER = ":";
 
-    public static Map<String, String> booksRequest2queryMap(RetrofitBooksRequest booksRequest) {
+    public static Map<String, String> booksRequest2queryMap(PagedVolumesRequest booksRequest) {
         final Map<String, String> queryMap = new HashMap<>();
-        putIfNotEmptyNorNull(queryMap, Q_KEY, createQValue(booksRequest));
-        putIfNotEmptyNorNull(queryMap, PRINT_TYPE_KEY, booksRequest.getPrintType());
+        putIfNotEmptyNorNull(queryMap, Q_KEY, createQValue(booksRequest.getVolumesRequest()));
+        putIfNotEmptyNorNull(queryMap, PRINT_TYPE_KEY, booksRequest.getVolumesRequest().getPrintType());
         putIfNotEmptyNorNull(queryMap, START_INDEX_KEY, booksRequest.getStartIndex().toString());
         putIfNotEmptyNorNull(queryMap, MAX_RESULTS_KEY, booksRequest.getMaxResults().toString());
         return queryMap;
@@ -35,12 +36,12 @@ public class RetrofitBooksRequestToQueryConverter {
         }
     }
 
-    private static String createQValue(BooksRequest booksRequest) {
+    private static String createQValue(VolumesRequest volumesRequest) {
         final List<String> qParts = new ArrayList<>();
-        appendIfNotEmptyNorNull(qParts, TITLE_KEY, booksRequest.getTitle());
-        appendIfNotEmptyNorNull(qParts, AUTHOR_KEY, booksRequest.getAuthor());
-        appendIfNotEmptyNorNull(qParts, PUBLISHER_KEY, booksRequest.getPublisher());
-        appendIfNotEmptyNorNull(qParts, CATEGORY_KEY, booksRequest.getCategory());
+        appendIfNotEmptyNorNull(qParts, TITLE_KEY, volumesRequest.getTitle());
+        appendIfNotEmptyNorNull(qParts, AUTHOR_KEY, volumesRequest.getAuthor());
+        appendIfNotEmptyNorNull(qParts, PUBLISHER_KEY, volumesRequest.getPublisher());
+        appendIfNotEmptyNorNull(qParts, CATEGORY_KEY, volumesRequest.getCategory());
         return String.join(PAIRS_DELIMITER, qParts.toArray(new String[0]));
     }
 

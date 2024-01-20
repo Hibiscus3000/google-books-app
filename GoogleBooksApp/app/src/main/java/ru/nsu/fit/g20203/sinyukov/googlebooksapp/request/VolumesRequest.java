@@ -1,11 +1,11 @@
-package ru.nsu.fit.g20203.sinyukov.googlebooksapp.network.request;
+package ru.nsu.fit.g20203.sinyukov.googlebooksapp.request;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import ru.nsu.fit.g20203.sinyukov.googlebooksapp.network.request.category.Category;
+import ru.nsu.fit.g20203.sinyukov.googlebooksapp.request.category.Category;
 
-public abstract class BooksRequest {
+public class VolumesRequest {
 
     @NotNull
     private final String title;
@@ -18,7 +18,7 @@ public abstract class BooksRequest {
     @Nullable
     private final Category category;
 
-    public BooksRequest(String title, String author, String publisher, PrintType printType, Category category) {
+    public VolumesRequest(String title, String author, String publisher, PrintType printType, Category category) {
         this.title = title;
         this.author = author;
         this.publisher = publisher;

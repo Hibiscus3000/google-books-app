@@ -1,4 +1,4 @@
-package ru.nsu.fit.g20203.sinyukov.googlebooksapp.network.request.category;
+package ru.nsu.fit.g20203.sinyukov.googlebooksapp.request.category;
 
 public class CustomCategory implements Category{
 

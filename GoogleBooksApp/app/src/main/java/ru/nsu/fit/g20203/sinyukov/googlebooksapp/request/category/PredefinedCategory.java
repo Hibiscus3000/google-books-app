@@ -1,4 +1,4 @@
-package ru.nsu.fit.g20203.sinyukov.googlebooksapp.network.request.category;
+package ru.nsu.fit.g20203.sinyukov.googlebooksapp.request.category;
 
 public enum PredefinedCategory implements Category {
     BUSINESS_ECONOMICS_ENTREPRENEURSHIP("Business & Economics / Entrepreneurship");

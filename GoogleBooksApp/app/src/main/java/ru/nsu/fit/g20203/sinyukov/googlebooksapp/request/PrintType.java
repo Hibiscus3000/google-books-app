@@ -1,4 +1,4 @@
-package ru.nsu.fit.g20203.sinyukov.googlebooksapp.network.request;
+package ru.nsu.fit.g20203.sinyukov.googlebooksapp.request;
 
 public enum PrintType {
     ALL("all"), BOOKS("books"), MAGAZINES("magazines");
