@@ -1,7 +1,7 @@
 package ru.nsu.fit.g20203.sinyukov.googlebooksapp.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
@@ -11,12 +11,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.paging.LoadState;
+import androidx.recyclerview.widget.RecyclerView;
 
 import ru.nsu.fit.g20203.sinyukov.googlebooksapp.R;
+import ru.nsu.fit.g20203.sinyukov.googlebooksapp.VolumeComparator;
+import ru.nsu.fit.g20203.sinyukov.googlebooksapp.VolumesAdapter;
 import ru.nsu.fit.g20203.sinyukov.googlebooksapp.databinding.DetailedSearchBinding;
 import ru.nsu.fit.g20203.sinyukov.googlebooksapp.databinding.ListActivityBinding;
-import ru.nsu.fit.g20203.sinyukov.googlebooksapp.fragment.RecyclerViewFragment;
-import ru.nsu.fit.g20203.sinyukov.googlebooksapp.fragment.TextFragment;
 import ru.nsu.fit.g20203.sinyukov.googlebooksapp.request.PrintType;
 import ru.nsu.fit.g20203.sinyukov.googlebooksapp.request.VolumesRequest;
 import ru.nsu.fit.g20203.sinyukov.googlebooksapp.viewmodel.VolumesViewModel;
@@ -80,37 +82,65 @@ public class ListActivity extends AppCompatActivity {
         volumesViewModel.getNoResultsLiveData().observe(this,
                 noResults -> {
                     if (noResults) {
-                        createTextFragment(R.string.noResultsQuery);
+                        createText(R.string.noResultsQuery);
                     }
                 });
 
         activityBinding.clearButton.setOnClickListener(v -> {
-            createTextFragment(R.string.queryPrompt);
+            createText(R.string.queryPrompt);
             clear();
         });
 
-        createTextFragment(R.string.queryPrompt);
+        final VolumesAdapter volumesAdapter = new VolumesAdapter(new VolumeComparator(), volume -> {
+            Intent i = new Intent(this, DetailsActivity.class);
+            i.putExtra(DetailsActivity.VOLUME_KEY, volume);
+            startActivity(i);
+        });
+        final RecyclerView recyclerView = activityBinding.recyclerView;
+        recyclerView.setAdapter(volumesAdapter);
+        volumesViewModel.getPagerLiveData().observe(this, volumePagingData ->
+                volumesAdapter.submitData(getLifecycle(), volumePagingData));
+
+        volumesAdapter.addLoadStateListener(loadState -> {
+            if (loadState.getSource().getRefresh() instanceof LoadState.Error) {
+                volumesViewModel.setErrorOccurred(true);
+            } else {
+                volumesViewModel.setErrorOccurred(true);
+            }
+            if (loadState.getSource().getRefresh() instanceof LoadState.NotLoading
+                    && loadState.getAppend().getEndOfPaginationReached()) {
+                if (volumesAdapter.getItemCount() >= 1) {
+                    volumesViewModel.setEndOfPaginationReached(true);
+                    volumesViewModel.setNoResults(false);
+                } else {
+                    volumesViewModel.setEndOfPaginationReached(false);
+                    volumesViewModel.setNoResults(true);
+                }
+            } else {
+                volumesViewModel.setEndOfPaginationReached(false);
+                volumesViewModel.setNoResults(false);
+            }
+            return null;
+        });
+
+        volumesViewModel.getVolumesRequestLiveData().observe(this, volumePagingData -> volumesAdapter.refresh());
+
+        createText(R.string.queryPrompt);
     }
 
     private void setEndOfPagingOrErrorTextView(@StringRes Integer textRes, boolean b) {
         activityBinding.endOfPagingOrErrorTextView.setText(b ? getString(textRes) : "");
     }
 
-    private void createTextFragment(@StringRes Integer textRes) {
-        final Bundle bundle = new Bundle();
-        bundle.putString(TextFragment.TEXT_KEY, getString(textRes));
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.recyclerViewContainer, TextFragment.class, bundle)
-                .setReorderingAllowed(true)
-                .commit();
+    private void createText(@StringRes Integer textRes) {
+        activityBinding.recyclerView.setVisibility(View.GONE);
+        activityBinding.searchTextView.setVisibility(View.VISIBLE);
+        activityBinding.searchTextView.setText(getString(textRes));
     }
 
     private void createRecyclerViewFragment() {
-        final Bundle bundle = new Bundle();
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.recyclerViewContainer, new RecyclerViewFragment())
-                .setReorderingAllowed(true)
-                .commit();
+        activityBinding.recyclerView.setVisibility(View.VISIBLE);
+        activityBinding.searchTextView.setVisibility(View.GONE);
     }
 
     private void clear() {
@@ -119,22 +149,24 @@ public class ListActivity extends AppCompatActivity {
         detailedSearchBinding.authorEditText.setText("");
         detailedSearchBinding.categoryEditText.setText("");
         detailedSearchBinding.anyRadioButton.setChecked(true);
+
+        volumesViewModel.clear();
     }
 
     private void search() {
         final InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-        final IBinder windowToken = getCurrentFocus().getWindowToken();
-        if (null != windowToken) {
-            imm.hideSoftInputFromWindow(windowToken, 0);
+        final View currentFocus = getCurrentFocus();
+        if (null != currentFocus) {
+            imm.hideSoftInputFromWindow(currentFocus.getWindowToken(), 0);
         }
-        createRecyclerViewFragment();
-        createCheckAndDespatchRequest();
+        createCheckAndDispatchRequest();
     }
 
-    private void createCheckAndDespatchRequest() {
+    private void createCheckAndDispatchRequest() {
         final VolumesRequest volumesRequest = createRequest();
         if (volumesRequest.isValid()) {
             volumesViewModel.setVolumesRequest(volumesRequest);
+            createRecyclerViewFragment();
         }
     }
 

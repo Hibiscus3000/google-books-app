@@ -15,4 +15,9 @@
     <string name="endOfPagination">End of pagination reached</string>
     <string name="networkError">Network error occurred</string>
     <string name="clearAction">Clear Query</string>
+    <string name="volumeImage">Volume image</string>
+    <string name="goToGoogleBooks">Go to Google Books</string>
+    <string name="downloadPdf">Download PDF</string>
+    <string name="language">Language</string>
+    <string name="categories">Categories</string>
 </resources>

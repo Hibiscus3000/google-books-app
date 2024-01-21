@@ -10,14 +10,22 @@ public class PagingSourceFactory<T extends SourceType> {
 
     private final GoogleBooksRepository<T> repository;
 
+    private boolean lastSourceIsNotEmpty = false;
+
     public PagingSourceFactory(GoogleBooksRepository<T> repository) {
         this.repository = repository;
     }
 
     public VolumesPagingSource invoke(@Nullable VolumesRequest volumesRequest) {
         if (null == volumesRequest) {
+            lastSourceIsNotEmpty = false;
             return new EmptyVolumesPagingSource();
         }
+        lastSourceIsNotEmpty = true;
         return new OnRequestVolumesPagingSource<>(volumesRequest, repository);
+    }
+
+    public boolean lastSourceIsNotEmpty() {
+        return lastSourceIsNotEmpty;
     }
 }

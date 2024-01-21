@@ -2,16 +2,17 @@ package ru.nsu.fit.g20203.sinyukov.googlebooksapp;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Objects;
 
-public class Volume {
+public class Volume implements Serializable {
 
     private String id;
     private VolumeInfo volumeInfo;
     private AccessInfo accessInfo;
 
-    public static class VolumeInfo {
+    public static class VolumeInfo implements Serializable {
         private ImageLinks imageLinks;
         private String title;
         private String description;
@@ -26,7 +27,7 @@ public class Volume {
         private String language;
         private String infoLink;
 
-        public static class ImageLinks {
+        public static class ImageLinks implements Serializable {
             private String smallThumbnail;
             private String thumbnail;
             private String small;
@@ -34,29 +35,51 @@ public class Volume {
             private String large;
             private String extraLarge;
 
-            public String getSmallThumbnail() {
-                return smallThumbnail;
+            public String get() {
+                if (null != extraLarge) {
+                    return extraLarge;
+                }
+                if (null != large) {
+                    return large;
+                }
+                if (null != medium) {
+                    return medium;
+                }
+                if (null != small) {
+                    return small;
+                }
+                if (null != thumbnail) {
+                    return thumbnail;
+                }
+                if (null != smallThumbnail) {
+                    return smallThumbnail;
+                }
+                return null;
             }
 
-            public String getThumbnail() {
-                return thumbnail;
-            }
-
-            public String getSmall() {
-                return small;
-            }
-
-            public String getMedium() {
-                return medium;
-            }
-
-            public String getLarge() {
-                return large;
-            }
-
-            public String getExtraLarge() {
-                return extraLarge;
-            }
+//            public String getSmallThumbnail() {
+//                return smallThumbnail;
+//            }
+//
+//            public String getThumbnail() {
+//                return thumbnail;
+//            }
+//
+//            public String getSmall() {
+//                return small;
+//            }
+//
+//            public String getMedium() {
+//                return medium;
+//            }
+//
+//            public String getLarge() {
+//                return large;
+//            }
+//
+//            public String getExtraLarge() {
+//                return extraLarge;
+//            }
 
             @Override
             public boolean equals(Object o) {
@@ -141,11 +164,11 @@ public class Volume {
         }
     }
 
-    public static class AccessInfo {
+    public static class AccessInfo implements Serializable {
 
         private PDF pdf;
 
-        public static class PDF {
+        public static class PDF implements Serializable {
             private boolean isAvailable;
             private String downloadLink;
 

@@ -37,6 +37,7 @@ android {
 
 dependencies {
 
+    implementation("com.squareup.picasso:picasso:2.71828")
     implementation("androidx.paging:paging-common:3.2.1")
     implementation("androidx.paging:paging-guava:3.2.1")
     implementation("com.google.guava:guava:33.0.0-android")

@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:animateLayoutChanges="true"
     android:orientation="vertical"
     tools:context=".activity.ListActivity">
 
@@ -11,11 +13,6 @@
         android:layout_height="wrap_content"
         android:animateLayoutChanges="true"
         android:orientation="vertical">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
 
         <EditText
             android:id="@+id/titleEditText"
@@ -28,17 +25,6 @@
             android:inputType="text"
             android:minHeight="48dp"
             android:text="Робинзон Крузо" />
-
-        <ImageButton
-            android:id="@+id/searchButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/defaultMargins"
-            android:contentDescription="@string/searchAction"
-            android:minHeight="48dp"
-            android:src="@drawable/search" />
-
-        </LinearLayout>
 
         <include
             android:id="@+id/detailedSearch"
@@ -53,10 +39,63 @@
             android:layout_margin="@dimen/defaultMargins"
             android:background="@android:color/transparent"
             android:contentDescription="@string/moreSearchOption"
+            android:minWidth="48dp"
             android:minHeight="48dp"
             android:src="@drawable/down" />
 
     </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="100"
+        android:animateLayoutChanges="true">
+        <TextView
+            android:id="@+id/search_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            android:layout_gravity="center"
+            android:textAlignment="center"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:layout_gravity="center"/>
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/searchButton"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/defaultMargins"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/searchAction"
+            android:minWidth="48dp"
+            android:minHeight="48dp"
+            android:src="@drawable/search" />
+
+        <ImageButton
+            android:id="@+id/clearButton"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/defaultMargins"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/clearAction"
+            android:minWidth="48dp"
+            android:minHeight="48dp"
+            android:src="@drawable/clear" />
+
         <TextView
             android:id="@+id/endOfPagingOrErrorTextView"
             android:layout_width="wrap_content"
@@ -64,12 +103,6 @@
             android:layout_margin="@dimen/defaultMargins"
             android:textSize="24sp" />
 
-
-
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/recyclerViewContainer"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center_horizontal" />
+    </LinearLayout>
 
 </LinearLayout>

@@ -34,46 +34,30 @@
         android:inputType="text"
         android:minHeight="48dp" />
 
-    <LinearLayout
+    <RadioGroup
+        android:id="@+id/printTypeRadioGroup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <RadioGroup
-            android:id="@+id/printTypeRadioGroup"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:id="@+id/anyRadioButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="true"
-                android:text="@string/anyPrintType" />
-
-            <RadioButton
-                android:id="@+id/booksRadioButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/booksPrintType" />
-
-            <RadioButton
-                android:id="@+id/magazinesRadioButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/magazinesPrintType" />
-        </RadioGroup>
-
-        <ImageButton
-            android:id="@+id/clearButton"
+        <RadioButton
+            android:id="@+id/anyRadioButton"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_margin="@dimen/defaultMargins"
-            android:contentDescription="@string/clearAction"
-            android:minHeight="48dp"
-            android:src="@drawable/clear" />
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="@string/anyPrintType" />
 
-    </LinearLayout>
+        <RadioButton
+            android:id="@+id/booksRadioButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/booksPrintType" />
+
+        <RadioButton
+            android:id="@+id/magazinesRadioButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/magazinesPrintType" />
+    </RadioGroup>
 
 </LinearLayout>

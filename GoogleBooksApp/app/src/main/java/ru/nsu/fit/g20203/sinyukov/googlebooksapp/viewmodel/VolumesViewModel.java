@@ -26,6 +26,7 @@ public class VolumesViewModel extends ViewModel {
     private final MutableLiveData<Boolean> endOfPaginationReached = new MutableLiveData<>(false);
     private final MutableLiveData<Boolean> errorOccurred = new MutableLiveData<>(false);
 
+    private final PagingSourceFactory<?> pagingSourceFactory;
     private final Pager<Integer, Volume> pager;
 
     public VolumesViewModel(PagingSourceFactory<?> pagingSourceFactory) {
@@ -34,7 +35,9 @@ public class VolumesViewModel extends ViewModel {
                 () -> pagingSourceFactory.invoke(volumesRequest.getValue())
         );
 
-        CoroutineScope viewModelScope = ViewModelKt.getViewModelScope(this);
+        this.pagingSourceFactory = pagingSourceFactory;
+
+        final CoroutineScope viewModelScope = ViewModelKt.getViewModelScope(this);
         PagingLiveData.cachedIn(PagingLiveData.getLiveData(pager), viewModelScope);
     }
 
@@ -55,15 +58,21 @@ public class VolumesViewModel extends ViewModel {
     }
 
     public void setNoResults(boolean b) {
-        noResults.postValue(b);
+        if (pagingSourceFactory.lastSourceIsNotEmpty()) {
+            noResults.postValue(b);
+        }
     }
 
     public void setEndOfPaginationReached(boolean b) {
-        endOfPaginationReached.postValue(b);
+        if (pagingSourceFactory.lastSourceIsNotEmpty()) {
+            endOfPaginationReached.postValue(b);
+        }
     }
 
     public void setErrorOccurred(boolean b) {
-        errorOccurred.postValue(b);
+        if (pagingSourceFactory.lastSourceIsNotEmpty()) {
+            errorOccurred.postValue(b);
+        }
     }
 
     public LiveData<Boolean> getNoResultsLiveData() {
