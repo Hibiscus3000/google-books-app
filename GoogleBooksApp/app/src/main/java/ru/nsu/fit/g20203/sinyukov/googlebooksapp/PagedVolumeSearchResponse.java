@@ -1,14 +1,15 @@
 package ru.nsu.fit.g20203.sinyukov.googlebooksapp;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class PagedVolumeSearchResponse {
 
     private final List<Volume> volumes;
-    private final int nextPageNumber;
+    private final Integer nextPageNumber;
 
-    public PagedVolumeSearchResponse(List<Volume> volumes, int nextPageNumber) {
-        this.volumes = volumes;
+    public PagedVolumeSearchResponse(Volume[] volumes, int nextPageNumber) {
+        this.volumes = Arrays.asList(volumes);
         this.nextPageNumber = nextPageNumber;
     }
 
@@ -16,7 +17,7 @@ public class PagedVolumeSearchResponse {
         return volumes;
     }
 
-    public int getNextPageNumber() {
+    public Integer getNextPageNumber() {
         return nextPageNumber;
     }
 }

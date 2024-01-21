@@ -2,8 +2,12 @@ package ru.nsu.fit.g20203.sinyukov.googlebooksapp;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Arrays;
+import java.util.Objects;
+
 public class Volume {
 
+    private String id;
     private VolumeInfo volumeInfo;
     private AccessInfo accessInfo;
 
@@ -52,6 +56,19 @@ public class Volume {
 
             public String getExtraLarge() {
                 return extraLarge;
+            }
+
+            @Override
+            public boolean equals(Object o) {
+                if (this == o) return true;
+                if (o == null || getClass() != o.getClass()) return false;
+                ImageLinks that = (ImageLinks) o;
+                return Objects.equals(smallThumbnail, that.smallThumbnail) && Objects.equals(thumbnail, that.thumbnail) && Objects.equals(small, that.small) && Objects.equals(medium, that.medium) && Objects.equals(large, that.large) && Objects.equals(extraLarge, that.extraLarge);
+            }
+
+            @Override
+            public int hashCode() {
+                return Objects.hash(smallThumbnail, thumbnail, small, medium, large, extraLarge);
             }
         }
 
@@ -106,6 +123,30 @@ public class Volume {
         public String getInfoLink() {
             return infoLink;
         }
+
+        public void setTitle(String title) {
+            this.title = title;
+        }
+
+        public void setAuthors(String[] authors) {
+            this.authors = authors;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            VolumeInfo that = (VolumeInfo) o;
+            return Double.compare(that.averageRating, averageRating) == 0 && ratingsCount == that.ratingsCount && Objects.equals(imageLinks, that.imageLinks) && Objects.equals(title, that.title) && Objects.equals(description, that.description) && Arrays.equals(authors, that.authors) && Objects.equals(publisher, that.publisher) && Objects.equals(publishedDate, that.publishedDate) && Objects.equals(printType, that.printType) && Objects.equals(mainCategory, that.mainCategory) && Arrays.equals(categories, that.categories) && Objects.equals(language, that.language) && Objects.equals(infoLink, that.infoLink);
+        }
+
+        @Override
+        public int hashCode() {
+            int result = Objects.hash(imageLinks, title, description, publisher, publishedDate, printType, mainCategory, averageRating, ratingsCount, language, infoLink);
+            result = 31 * result + Arrays.hashCode(authors);
+            result = 31 * result + Arrays.hashCode(categories);
+            return result;
+        }
     }
 
     public static class AccessInfo {
@@ -123,11 +164,28 @@ public class Volume {
             public String getDownloadLink() {
                 return downloadLink;
             }
+
+            @Override
+            public boolean equals(Object o) {
+                if (this == o) return true;
+                if (o == null || getClass() != o.getClass()) return false;
+                PDF pdf = (PDF) o;
+                return isAvailable == pdf.isAvailable && Objects.equals(downloadLink, pdf.downloadLink);
+            }
+
+            @Override
+            public int hashCode() {
+                return Objects.hash(isAvailable, downloadLink);
+            }
         }
 
         public PDF getPdf() {
             return pdf;
         }
+    }
+
+    public String getId() {
+        return id;
     }
 
     public VolumeInfo getVolumeInfo() {
@@ -137,4 +195,23 @@ public class Volume {
     public AccessInfo getAccessInfo() {
         return accessInfo;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Volume volume = (Volume) o;
+        return Objects.equals(id, volume.id) && Objects.equals(volumeInfo, volume.volumeInfo) && Objects.equals(accessInfo, volume.accessInfo);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, volumeInfo, accessInfo);
+    }
+
+    public void setVolumeInfo() {
+        volumeInfo = new VolumeInfo();
+    }
+
+
 }

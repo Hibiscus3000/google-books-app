@@ -21,15 +21,16 @@ import ru.nsu.fit.g20203.sinyukov.googlebooksapp.request.PagedVolumesRequest;
 import ru.nsu.fit.g20203.sinyukov.googlebooksapp.request.VolumesRequest;
 import ru.nsu.fit.g20203.sinyukov.googlebooksapp.sourcetype.SourceType;
 
-public class VolumesDataSource<T extends SourceType> extends ListenableFuturePagingSource<Integer, Volume> {
+public class OnRequestVolumesPagingSource<T extends SourceType> extends VolumesPagingSource {
 
     private static final int NUMBER_OF_THREADS = 2;
     private final Executor executor = Executors.newCachedThreadPool();
 
+    @NonNull
     private final VolumesRequest volumesRequest;
     private final GoogleBooksRepository<T> repository;
 
-    public VolumesDataSource(VolumesRequest volumesRequest, GoogleBooksRepository<T> repository) {
+    public OnRequestVolumesPagingSource(VolumesRequest volumesRequest, GoogleBooksRepository<T> repository) {
         this.volumesRequest = volumesRequest;
         this.repository = repository;
     }

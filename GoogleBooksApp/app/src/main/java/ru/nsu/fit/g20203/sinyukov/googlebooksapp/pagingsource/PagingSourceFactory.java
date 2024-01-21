@@ -1,5 +1,7 @@
 package ru.nsu.fit.g20203.sinyukov.googlebooksapp.pagingsource;
 
+import javax.annotation.Nullable;
+
 import ru.nsu.fit.g20203.sinyukov.googlebooksapp.repository.GoogleBooksRepository;
 import ru.nsu.fit.g20203.sinyukov.googlebooksapp.request.VolumesRequest;
 import ru.nsu.fit.g20203.sinyukov.googlebooksapp.sourcetype.SourceType;
@@ -12,7 +14,10 @@ public class PagingSourceFactory<T extends SourceType> {
         this.repository = repository;
     }
 
-    public VolumesDataSource<T> invoke(VolumesRequest volumesRequest) {
-        return new VolumesDataSource<>(volumesRequest, repository);
+    public VolumesPagingSource invoke(@Nullable VolumesRequest volumesRequest) {
+        if (null == volumesRequest) {
+            return new EmptyVolumesPagingSource();
+        }
+        return new OnRequestVolumesPagingSource<>(volumesRequest, repository);
     }
 }

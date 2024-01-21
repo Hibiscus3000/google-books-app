@@ -19,7 +19,9 @@ public class VolumesAdapter extends PagingDataAdapter<Volume, VolumesAdapter.Vol
     @NonNull
     @Override
     public VolumeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new VolumeViewHolder(parent);
+        final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item, parent, false);
+
+        return new VolumeViewHolder(view);
     }
 
     @Override

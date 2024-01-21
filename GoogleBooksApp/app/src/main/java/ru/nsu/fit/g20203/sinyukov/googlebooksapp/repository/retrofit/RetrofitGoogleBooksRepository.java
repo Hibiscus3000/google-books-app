@@ -3,6 +3,8 @@ package ru.nsu.fit.g20203.sinyukov.googlebooksapp.repository.retrofit;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.common.util.concurrent.ListeningExecutorService;
 import com.google.common.util.concurrent.MoreExecutors;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.util.List;
 import java.util.Map;
@@ -16,6 +18,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import ru.nsu.fit.g20203.sinyukov.googlebooksapp.PagedVolumeSearchResponse;
 import ru.nsu.fit.g20203.sinyukov.googlebooksapp.Volume;
+import ru.nsu.fit.g20203.sinyukov.googlebooksapp.gson.GoogleBooksGsonConverter;
 import ru.nsu.fit.g20203.sinyukov.googlebooksapp.network.GoogleBooksService;
 import ru.nsu.fit.g20203.sinyukov.googlebooksapp.repository.GoogleBooksRepository;
 import ru.nsu.fit.g20203.sinyukov.googlebooksapp.repository.callback.GoogleBooksRepositoryCallback;
@@ -35,7 +38,7 @@ public class RetrofitGoogleBooksRepository implements GoogleBooksRepository<Retr
     public RetrofitGoogleBooksRepository() {
         final Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GoogleBooksGsonConverter.buildGsonConverterFactory())
                 .build();
         googleBooksService = retrofit.create(GoogleBooksService.class);
 
@@ -53,7 +56,7 @@ public class RetrofitGoogleBooksRepository implements GoogleBooksRepository<Retr
         final Map<String, String> queryMap =
                 RetrofitBooksRequestToQueryConverter.booksRequest2queryMap(pagedVolumesRequest);
         return listeningExecutorService.submit(() -> {
-            Response<List<Volume>> response = googleBooksService.listVolumes(queryMap).execute();
+            Response<Volume[]> response = googleBooksService.listVolumes(queryMap).execute();
             return new PagedVolumeSearchResponse(response.body(), pagedVolumesRequest.getPageNumber() + 1);
         });
     }

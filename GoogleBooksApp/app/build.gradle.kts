@@ -37,6 +37,7 @@ android {
 
 dependencies {
 
+    implementation("androidx.paging:paging-common:3.2.1")
     implementation("androidx.paging:paging-guava:3.2.1")
     implementation("com.google.guava:guava:33.0.0-android")
     implementation("com.squareup.retrofit2:retrofit:2.9.0")

@@ -12,8 +12,10 @@
         android:layout_height="wrap_content"
         android:ems="15"
         android:hint="@string/title"
+        android:text="Робинзон Крузо"
         android:inputType="text"
         android:minHeight="48dp"
+        android:imeOptions="actionSearch"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.1"
@@ -27,19 +29,21 @@
         android:layout_height="wrap_content"
         android:contentDescription="@string/more"
         android:minHeight="48dp"
-        app:layout_constraintBottom_toBottomOf="@+id/editTextText"
+        app:layout_constraintBottom_toBottomOf="@+id/titleEditText"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/editTextText"
-        app:layout_constraintTop_toTopOf="@+id/editTextText"
+        app:layout_constraintStart_toEndOf="@+id/titleEditText"
+        app:layout_constraintTop_toTopOf="@+id/titleEditText"
         app:srcCompat="@drawable/more" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="356dp"
         android:layout_height="613dp"
+        android:orientation="vertical"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText" />
+        app:layout_constraintTop_toBottomOf="@+id/titleEditText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

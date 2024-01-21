@@ -11,5 +11,5 @@ import ru.nsu.fit.g20203.sinyukov.googlebooksapp.Volume;
 
 public interface GoogleBooksService {
     @GET("v1/volumes")
-    Call<List<Volume>> listVolumes(@QueryMap Map<String, String> queryParams);
+    Call<Volume[]> listVolumes(@QueryMap Map<String, String> queryParams);
 }
