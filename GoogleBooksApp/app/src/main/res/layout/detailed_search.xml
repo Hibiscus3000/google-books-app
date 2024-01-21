@@ -4,35 +4,17 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <EditText
+    <include
         android:id="@+id/authorEditText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="13"
-        android:hint="@string/author"
-        android:imeOptions="actionNext"
-        android:inputType="text"
-        android:minHeight="48dp" />
+        layout="@layout/card_edit_text"/>
 
-    <EditText
+    <include
         android:id="@+id/publisherEditText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="13"
-        android:hint="@string/publisher"
-        android:imeOptions="actionNext"
-        android:inputType="text"
-        android:minHeight="48dp" />
+        layout="@layout/card_edit_text"/>
 
-    <MultiAutoCompleteTextView
+    <include
         android:id="@+id/categoryEditText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="13"
-        android:hint="@string/category"
-        android:imeOptions="actionDone"
-        android:inputType="text"
-        android:minHeight="48dp" />
+        layout="@layout/card_edit_text"/>
 
     <RadioGroup
         android:id="@+id/printTypeRadioGroup"
@@ -45,18 +27,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="true"
+            android:textColor="@color/uiElementsStrokeAndTextColor"
             android:text="@string/anyPrintType" />
 
         <RadioButton
             android:id="@+id/booksRadioButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/uiElementsStrokeAndTextColor"
             android:text="@string/booksPrintType" />
 
         <RadioButton
             android:id="@+id/magazinesRadioButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/uiElementsStrokeAndTextColor"
             android:text="@string/magazinesPrintType" />
     </RadioGroup>
 

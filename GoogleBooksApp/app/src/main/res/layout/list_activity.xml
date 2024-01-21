@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:animateLayoutChanges="true"
+    android:background="@color/background"
     android:orientation="vertical"
     tools:context=".activity.ListActivity">
 
@@ -12,19 +13,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:animateLayoutChanges="true"
+        android:layout_marginHorizontal="@dimen/marginMedium"
         android:orientation="vertical">
 
-        <EditText
+        <include
             android:id="@+id/titleEditText"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_margin="@dimen/defaultMargins"
-            android:ems="13"
-            android:hint="@string/title"
-            android:imeOptions="actionSearch"
-            android:inputType="text"
-            android:minHeight="48dp"
-            android:text="Робинзон Крузо" />
+            layout="@layout/card_edit_text"/>
 
         <include
             android:id="@+id/detailedSearch"
@@ -45,28 +39,38 @@
 
     </LinearLayout>
 
-    <FrameLayout
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        app:cardBackgroundColor="@color/bigCardAndDetailsColor"
+        android:layout_marginHorizontal="@dimen/marginMedium"
+        android:animateLayoutChanges="true"
         android:layout_weight="100"
-        android:animateLayoutChanges="true">
-        <TextView
-            android:id="@+id/search_text_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="24sp"
-            android:layout_gravity="center"
-            android:textAlignment="center"/>
+        app:cardCornerRadius="@dimen/bigCornerRadius">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view"
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            android:orientation="vertical"
-            android:visibility="gone"
-            android:layout_gravity="center"/>
-    </FrameLayout>
+            android:animateLayoutChanges="true">
+
+            <TextView
+                android:id="@+id/search_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textAlignment="center"
+                android:textSize="24sp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+        </FrameLayout>
+    </com.google.android.material.card.MaterialCardView>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -101,6 +105,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_margin="@dimen/defaultMargins"
+            android:textColor="@color/uiElementsStrokeAndTextColor"
             android:textSize="24sp" />
 
     </LinearLayout>

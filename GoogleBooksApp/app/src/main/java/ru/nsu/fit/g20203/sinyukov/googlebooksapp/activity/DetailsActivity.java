@@ -3,9 +3,11 @@ package ru.nsu.fit.g20203.sinyukov.googlebooksapp.activity;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,9 +24,12 @@ public class DetailsActivity extends AppCompatActivity {
 
     public static final String VOLUME_KEY = "VOLUME";
 
-    private static final int imageSize = 300;
+    private static final int imageSize = 400;
 
     private DetailsActivityBinding binding;
+
+    private static final String DESCRIPTION_EXPANDED_KEY = "DESCRIPTION";
+    private boolean descriptionExpanded;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -33,6 +38,12 @@ public class DetailsActivity extends AppCompatActivity {
         final Volume volume = (Volume) volumeBundle.getSerializable(VOLUME_KEY);
 
         binding = DetailsActivityBinding.inflate(getLayoutInflater());
+
+        if (null == savedInstanceState) {
+             descriptionExpanded = true;
+        } else {
+            descriptionExpanded = savedInstanceState.getBoolean(DESCRIPTION_EXPANDED_KEY);
+        }
 
         processVolumeInfo(volume.getVolumeInfo());
         processAccessInfo(volume.getAccessInfo());
@@ -49,14 +60,41 @@ public class DetailsActivity extends AppCompatActivity {
                 imageLinks -> imageLinks.get(), imageSize);
 
         binding.printTypeTextView.setText(getText(volumeInfo.getPrintType()));
-        binding.titleTextView.setText(getText(volumeInfo.getTitle()));
-        binding.authorTextView.setText(getText(", ", volumeInfo.getAuthors()));
-        binding.categoryTextView.setText(getText(", ", getString(R.string.categories) + ": ", volumeInfo.getCategories()));
-        binding.descriptionTextView.setText(getText(volumeInfo.getDescription()));
-        binding.publisherTextView.setText(getText(volumeInfo.getPublisher()));
-        binding.publishedDateTextView.setText(getText(volumeInfo.getPublishedDate()));
-        binding.languageTextView.setText(getText(getString(R.string.language) + ": ", volumeInfo.getLanguage()));
-        binding.ratingsTextView.setText(getRatingText(volumeInfo));
+
+        binding.titleTextView.textView.setText(getText(volumeInfo.getTitle()));
+        binding.titleTextView.textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 22);
+        binding.titleTextView.textView.setTypeface(Typeface.DEFAULT_BOLD);
+
+        binding.authorTextView.textView.setText(getText(", ", volumeInfo.getAuthors()));
+        binding.authorTextView.textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+
+        binding.categoryTextView.textView.setText(getText(", ", getString(R.string.categories) + ": ", volumeInfo.getCategories()));
+        binding.categoryTextView.textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
+
+        binding.descriptionTextView.textView.setText(getText(volumeInfo.getDescription()));
+        binding.descriptionTextView.textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+        binding.descriptionTextView.getRoot().setOnClickListener(v -> {
+            descriptionExpanded = !descriptionExpanded;
+            if (descriptionExpanded) {
+                binding.descriptionTextView.textView.setMaxLines(numberOfLinesExapanded);
+            } else {
+                binding.descriptionTextView.textView.setMaxLines(numberOfLinesCollapsed);
+            }
+        });
+        binding.descriptionTextView.getRoot().callOnClick();
+
+
+        binding.publisherTextView.textView.setText(getText(volumeInfo.getPublisher()));
+        binding.publisherTextView.textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
+
+        binding.publishedDateTextView.textView.setText(getText(volumeInfo.getPublishedDate()));
+        binding.publisherTextView.textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
+
+        binding.languageTextView.textView.setText(getText(getString(R.string.language) + ": ", volumeInfo.getLanguage()));
+        binding.languageTextView.textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
+
+        binding.ratingsTextView.textView.setText(getRatingText(volumeInfo));
+        binding.ratingsTextView.textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
 
         binding.goToGoogleBooksButton.setOnClickListener(v ->
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(volumeInfo.getInfoLink()))));
@@ -114,5 +152,14 @@ public class DetailsActivity extends AppCompatActivity {
     @NonNull
     private String getText(String delimiter, String prefix, String... array) {
         return null != array ? prefix + String.join(delimiter, array) : "";
+    }
+
+    private static final int numberOfLinesCollapsed = 8;
+    private static final int numberOfLinesExapanded = 100;
+
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        savedInstanceState.putBoolean(DESCRIPTION_EXPANDED_KEY, descriptionExpanded);
     }
 }

@@ -3,4 +3,9 @@
     <dimen name="listItemHeight">60dp</dimen>
     <dimen name="marginMedium">8dp</dimen>
     <dimen name="defaultMargins">4dp</dimen>
+    <dimen name="smallCardMargins">8dp</dimen>
+    <dimen name="cornerRadius">16dp</dimen>
+    <dimen name="bigCornerRadius">24dp</dimen>
+    <dimen name="editTextCornerRadius">32dp</dimen>
+    <dimen name="defaultStrokeWidth">1dp</dimen>
 </resources>

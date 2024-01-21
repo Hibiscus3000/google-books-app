@@ -14,7 +14,7 @@ import ru.nsu.fit.g20203.sinyukov.googlebooksapp.databinding.ListItemBinding;
 
 public class VolumesAdapter extends PagingDataAdapter<Volume, VolumesAdapter.VolumeViewHolder> {
 
-    private final static int imageSize = 150;
+    private final static int imageSize = 200;
 
     private final OnVolumeClickListener onVolumeClickListener;
 

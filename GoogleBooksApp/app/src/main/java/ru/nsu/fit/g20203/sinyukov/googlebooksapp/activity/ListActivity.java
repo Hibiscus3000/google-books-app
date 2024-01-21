@@ -46,7 +46,7 @@ public class ListActivity extends AppCompatActivity {
         volumesViewModel = new ViewModelProvider(this, new RetrofitVolumesViewModelFactory())
                 .get(VolumesViewModel.class);
 
-        activityBinding.titleEditText.setOnEditorActionListener((v, actionId, event) -> {
+        activityBinding.titleEditText.editText.setOnEditorActionListener((v, actionId, event) -> {
             boolean handled = false;
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 search();
@@ -65,15 +65,18 @@ public class ListActivity extends AppCompatActivity {
         activityBinding.moreButton.setOnClickListener(v -> {
             searchMenuExpanded = !searchMenuExpanded;
             if (searchMenuExpanded) {
-                activityBinding.titleEditText.setImeOptions(EditorInfo.IME_ACTION_NEXT);
+                activityBinding.titleEditText.editText.setImeOptions(EditorInfo.IME_ACTION_NEXT);
                 detailedSearchBinding.getRoot().setVisibility(View.VISIBLE);
                 activityBinding.moreButton.setImageDrawable(getDrawable(R.drawable.up));
             } else {
-                activityBinding.titleEditText.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
+                activityBinding.titleEditText.editText.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
                 detailedSearchBinding.getRoot().setVisibility(View.GONE);
                 activityBinding.moreButton.setImageDrawable(getDrawable(R.drawable.down));
             }
         });
+
+        activityBinding.titleEditText.editText.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
+        detailedSearchBinding.categoryEditText.editText.setImeOptions(EditorInfo.IME_ACTION_DONE);
 
         volumesViewModel.getEndOfPaginationReachedLiveData().observe(this,
                 endOfPaginationReached -> setEndOfPagingOrErrorTextView(R.string.endOfPagination, endOfPaginationReached));
@@ -123,6 +126,11 @@ public class ListActivity extends AppCompatActivity {
             return null;
         });
 
+        activityBinding.titleEditText.editText.setHint(getString(R.string.title));
+        detailedSearchBinding.publisherEditText.editText.setHint(getString(R.string.publisher));
+        detailedSearchBinding.authorEditText.editText.setHint(getString(R.string.author));
+        detailedSearchBinding.categoryEditText.editText.setHint(getString(R.string.category));
+
         volumesViewModel.getVolumesRequestLiveData().observe(this, volumePagingData -> volumesAdapter.refresh());
 
         createText(R.string.queryPrompt);
@@ -144,10 +152,10 @@ public class ListActivity extends AppCompatActivity {
     }
 
     private void clear() {
-        activityBinding.titleEditText.setText("");
-        detailedSearchBinding.publisherEditText.setText("");
-        detailedSearchBinding.authorEditText.setText("");
-        detailedSearchBinding.categoryEditText.setText("");
+        activityBinding.titleEditText.editText.setText("");
+        detailedSearchBinding.publisherEditText.editText.setText("");
+        detailedSearchBinding.authorEditText.editText.setText("");
+        detailedSearchBinding.categoryEditText.editText.setText("");
         detailedSearchBinding.anyRadioButton.setChecked(true);
 
         volumesViewModel.clear();
@@ -171,11 +179,11 @@ public class ListActivity extends AppCompatActivity {
     }
 
     private VolumesRequest createRequest() {
-        return new VolumesRequest(activityBinding.titleEditText.getText().toString(),
-                detailedSearchBinding.authorEditText.getText().toString(),
-                detailedSearchBinding.publisherEditText.getText().toString(),
+        return new VolumesRequest(activityBinding.titleEditText.editText.getText().toString(),
+                detailedSearchBinding.authorEditText.editText.getText().toString(),
+                detailedSearchBinding.publisherEditText.editText.getText().toString(),
                 getPrintType(),
-                detailedSearchBinding.categoryEditText.getText().toString());
+                detailedSearchBinding.categoryEditText.editText.getText().toString());
     }
 
     private PrintType getPrintType() {
