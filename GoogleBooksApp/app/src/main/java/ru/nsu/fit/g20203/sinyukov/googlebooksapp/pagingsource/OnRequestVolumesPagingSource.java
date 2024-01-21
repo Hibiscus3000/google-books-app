@@ -69,7 +69,7 @@ public class OnRequestVolumesPagingSource<T extends SourceType> extends VolumesP
         final int nextPageNumber = null == key ? 1 : key;
 
         ListenableFuture<PagedVolumeSearchResponse> futureResponse =
-                repository.listBooks(new PagedVolumesRequest(volumesRequest, nextPageNumber));
+                repository.listBooks(new PagedVolumesRequest(volumesRequest, nextPageNumber, loadParams.getLoadSize()));
         ListenableFuture<LoadResult<Integer, Volume>> pageFuture =
                 Futures.transform(futureResponse, this::toLoadResult, executor);
 
@@ -78,7 +78,7 @@ public class OnRequestVolumesPagingSource<T extends SourceType> extends VolumesP
 
     private LoadResult<Integer, Volume> toLoadResult(@NotNull PagedVolumeSearchResponse response) {
         return new LoadResult.Page<>(response.getVolumes(),
-                null /*TODO*/,
+                response.getPrevPageNumber(),
                 response.getNextPageNumber(),
                 LoadResult.Page.COUNT_UNDEFINED,
                 LoadResult.Page.COUNT_UNDEFINED);

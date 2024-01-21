@@ -1,5 +1,8 @@
 package ru.nsu.fit.g20203.sinyukov.googlebooksapp.viewmodel;
 
+import android.nfc.Tag;
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -16,6 +19,8 @@ import ru.nsu.fit.g20203.sinyukov.googlebooksapp.pagingsource.PagingSourceFactor
 import ru.nsu.fit.g20203.sinyukov.googlebooksapp.request.VolumesRequest;
 
 public class VolumesViewModel extends ViewModel {
+
+    private static final String TAG = "VolumesViewModel";
 
     private final MutableLiveData<VolumesRequest> volumesRequest = new MutableLiveData<>();
 
@@ -43,6 +48,7 @@ public class VolumesViewModel extends ViewModel {
         if (!volumesRequest.isValid()) {
             throw new RuntimeException("Volumes request invalid in adapter");
         }
+        Log.i(TAG, "New request: " + volumesRequest);
         this.volumesRequest.postValue(volumesRequest);
     }
 }

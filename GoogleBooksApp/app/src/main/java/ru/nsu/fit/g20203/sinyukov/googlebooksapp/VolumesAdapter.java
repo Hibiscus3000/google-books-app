@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import ru.nsu.fit.g20203.sinyukov.googlebooksapp.databinding.ListItemBinding;
 
 public class VolumesAdapter extends PagingDataAdapter<Volume, VolumesAdapter.VolumeViewHolder> {
+
     public VolumesAdapter(@NonNull DiffUtil.ItemCallback<Volume> diffCallback) {
         super(diffCallback);
     }
@@ -19,9 +20,8 @@ public class VolumesAdapter extends PagingDataAdapter<Volume, VolumesAdapter.Vol
     @NonNull
     @Override
     public VolumeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item, parent, false);
-
-        return new VolumeViewHolder(view);
+        return new VolumesAdapter.VolumeViewHolder(ListItemBinding.inflate(LayoutInflater.from(parent.getContext()),
+                parent, false));
     }
 
     @Override
@@ -34,14 +34,25 @@ public class VolumesAdapter extends PagingDataAdapter<Volume, VolumesAdapter.Vol
 
         private final ListItemBinding binding;
 
-        public VolumeViewHolder(@NonNull View view) {
-            super(view);
-            binding = ListItemBinding.inflate(LayoutInflater.from(view.getContext()));
+        public VolumeViewHolder(@NonNull ListItemBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
         }
 
         public void bind(Volume volume) {
-            binding.titleTextView.setText(volume.getVolumeInfo().getTitle());
-            binding.authorsTextView.setText(String.join(", ", volume.getVolumeInfo().getAuthors()));
+            final Volume.VolumeInfo volumeInfo = volume.getVolumeInfo();
+            binding.titleTextView.setText(getText(volumeInfo.getTitle()));
+            binding.authorsTextView.setText(getText(volumeInfo.getAuthors(), ", "));
+        }
+
+        @NonNull
+        private String getText(String text) {
+            return null != text ? text : "";
+        }
+
+        @NonNull
+        private String getText(String[] array, String delimiter) {
+            return null != array ? String.join(delimiter, array) : "";
         }
     }
 }

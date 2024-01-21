@@ -1,5 +1,7 @@
 package ru.nsu.fit.g20203.sinyukov.googlebooksapp.repository.retrofit;
 
+import android.util.Log;
+
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.common.util.concurrent.ListeningExecutorService;
 import com.google.common.util.concurrent.MoreExecutors;
@@ -29,6 +31,8 @@ import ru.nsu.fit.g20203.sinyukov.googlebooksapp.sourcetype.RetrofitSourceType;
 
 public class RetrofitGoogleBooksRepository implements GoogleBooksRepository<RetrofitSourceType> {
 
+    private final String TAG = "RetrofitGoogleBooksRepository";
+
     private static final String BASE_URL = "https://www.googleapis.com/books/";
     private final GoogleBooksService googleBooksService;
 
@@ -56,8 +60,9 @@ public class RetrofitGoogleBooksRepository implements GoogleBooksRepository<Retr
         final Map<String, String> queryMap =
                 RetrofitBooksRequestToQueryConverter.booksRequest2queryMap(pagedVolumesRequest);
         return listeningExecutorService.submit(() -> {
+            Log.i(TAG, "Sending request: " + pagedVolumesRequest);
             Response<Volume[]> response = googleBooksService.listVolumes(queryMap).execute();
-            return new PagedVolumeSearchResponse(response.body(), pagedVolumesRequest.getPageNumber() + 1);
+            return new PagedVolumeSearchResponse(response.body(), pagedVolumesRequest.getPageNumber());
         });
     }
 

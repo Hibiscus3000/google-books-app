@@ -124,14 +124,6 @@ public class Volume {
             return infoLink;
         }
 
-        public void setTitle(String title) {
-            this.title = title;
-        }
-
-        public void setAuthors(String[] authors) {
-            this.authors = authors;
-        }
-
         @Override
         public boolean equals(Object o) {
             if (this == o) return true;
@@ -208,10 +200,5 @@ public class Volume {
     public int hashCode() {
         return Objects.hash(id, volumeInfo, accessInfo);
     }
-
-    public void setVolumeInfo() {
-        volumeInfo = new VolumeInfo();
-    }
-
 
 }

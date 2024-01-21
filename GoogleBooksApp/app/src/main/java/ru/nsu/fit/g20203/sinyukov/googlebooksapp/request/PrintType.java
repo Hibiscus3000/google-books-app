@@ -1,7 +1,7 @@
 package ru.nsu.fit.g20203.sinyukov.googlebooksapp.request;
 
 public enum PrintType {
-    ALL("all"), BOOKS("books"), MAGAZINES("magazines");
+    ANY("all"), BOOKS("books"), MAGAZINES("magazines");
 
     private final String stringRepresentation;
 

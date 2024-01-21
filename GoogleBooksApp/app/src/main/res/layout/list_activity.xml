@@ -1,49 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="horizontal"
     tools:context=".ListActivity">
 
-    <EditText
-        android:id="@+id/titleEditText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="15"
-        android:hint="@string/title"
-        android:text="Робинзон Крузо"
-        android:inputType="text"
-        android:minHeight="48dp"
-        android:imeOptions="actionSearch"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.03" />
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">|
 
-    <ImageButton
-        android:id="@+id/moreButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/more"
-        android:minHeight="48dp"
-        app:layout_constraintBottom_toBottomOf="@+id/titleEditText"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/titleEditText"
-        app:layout_constraintTop_toTopOf="@+id/titleEditText"
-        app:srcCompat="@drawable/more" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/titleEditText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/padding"
+                    android:ems="13"
+                    android:hint="@string/title"
+                    android:imeOptions="actionSearch"
+                    android:inputType="text"
+                    android:minHeight="48dp"
+                    android:text="Робинзон Крузо" />
+
+                <ImageButton
+                    android:id="@+id/searchButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/padding"
+                    android:contentDescription="@string/searchAction"
+                    android:minHeight="48dp"
+                    android:src="@android:drawable/ic_menu_search" />
+
+                <ImageButton
+                    android:id="@+id/moreButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/padding"
+                    android:contentDescription="@string/moreSearchOption"
+                    android:minHeight="48dp"
+                    android:src="@drawable/more" />
+            </LinearLayout>
+
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/detailedSearchFragmentContainer"
+                android:name="ru.nsu.fit.g20203.sinyukov.googlebooksapp.DetailedSearchFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"/>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="356dp"
-        android:layout_height="613dp"
-        android:orientation="vertical"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/titleEditText" />
+        android:layout_height="match_parent"
+        android:orientation="vertical" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

@@ -7,10 +7,12 @@ public class PagedVolumeSearchResponse {
 
     private final List<Volume> volumes;
     private final Integer nextPageNumber;
+    private final Integer prevPageNumber;
 
-    public PagedVolumeSearchResponse(Volume[] volumes, int nextPageNumber) {
+    public PagedVolumeSearchResponse(Volume[] volumes, int currentPageNumber) {
         this.volumes = Arrays.asList(volumes);
-        this.nextPageNumber = nextPageNumber;
+        this.nextPageNumber = 0 != volumes.length ? currentPageNumber + 1 : null;
+        this.prevPageNumber = 1 != currentPageNumber ? currentPageNumber - 1 : null;
     }
 
     public List<Volume> getVolumes() {
@@ -19,5 +21,9 @@ public class PagedVolumeSearchResponse {
 
     public Integer getNextPageNumber() {
         return nextPageNumber;
+    }
+
+    public Integer getPrevPageNumber() {
+        return prevPageNumber;
     }
 }

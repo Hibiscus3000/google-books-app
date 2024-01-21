@@ -1,6 +1,12 @@
 <resources>
     <string name="app_name">GoogleBooksApp</string>
     <string name="title">Title</string>
-    <string name="more">More search options</string>
+    <string name="moreSearchOption">More search options</string>
     <string name="apiKey">AIzaSyCMj1cbJSExeSDxsUeWu_aFmX20wdCk9DI</string>
+    <string name="author">Author</string>
+    <string name="publisher">Publisher</string>
+    <string name="anyPrintType">Any</string>
+    <string name="booksPrintType">Books</string>
+    <string name="magazinesPrintType">Magazines</string>
+    <string name="searchAction">Search</string>
 </resources>

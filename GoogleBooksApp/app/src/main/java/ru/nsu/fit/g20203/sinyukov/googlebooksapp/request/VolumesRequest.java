@@ -1,29 +1,24 @@
 package ru.nsu.fit.g20203.sinyukov.googlebooksapp.request;
 
+import androidx.annotation.NonNull;
+
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-
-import ru.nsu.fit.g20203.sinyukov.googlebooksapp.request.category.Category;
 
 public class VolumesRequest {
 
     @NotNull
-    private final String title;
+    private String title;
     @NotNull
-    private final String author;
+    private String author;
     @NotNull
-    private final String publisher;
+    private String publisher;
     @NotNull
-    private final PrintType printType;
+    private PrintType printType;
     @Nullable
-    private final Category category;
+    private String category;
 
-    public VolumesRequest(String title, String author, String publisher, PrintType printType, Category category) {
-        this.title = title;
-        this.author = author;
-        this.publisher = publisher;
-        this.printType = printType;
-        this.category = category;
+    public VolumesRequest() {
     }
 
     public String getTitle() {
@@ -46,7 +41,33 @@ public class VolumesRequest {
         return category.getString();
     }
 
+    public void setTitle(@NotNull String title) {
+        this.title = title;
+    }
+
+    public void setAuthor(@NotNull String author) {
+        this.author = author;
+    }
+
+    public void setPublisher(@NotNull String publisher) {
+        this.publisher = publisher;
+    }
+
+    public void setPrintType(@NotNull PrintType printType) {
+        this.printType = printType;
+    }
+
+    public void setCategory(@NotNull String category) {
+        this.category = category;
+    }
+
     public boolean isValid() {
-        return !title.isEmpty() || !author.isEmpty() || !publisher.isEmpty() || null != category;
+        return !title.isEmpty() || !author.isEmpty() || !publisher.isEmpty() || !category.isEmpty();
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return "Title: " + title + " Author: " + author + " Publisher: " + publisher + " Print type: " + printType + " Category: " + getCategory();
     }
 }
