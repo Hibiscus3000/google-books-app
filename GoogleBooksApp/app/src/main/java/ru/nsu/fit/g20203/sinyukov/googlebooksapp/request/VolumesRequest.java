@@ -8,17 +8,22 @@ import org.jetbrains.annotations.Nullable;
 public class VolumesRequest {
 
     @NotNull
-    private String title;
+    private final String title;
     @NotNull
-    private String author;
+    private final String author;
     @NotNull
-    private String publisher;
+    private final String publisher;
     @NotNull
-    private PrintType printType;
+    private final PrintType printType;
     @Nullable
-    private String category;
+    private final String category;
 
-    public VolumesRequest() {
+    public VolumesRequest(@NotNull String title, @NotNull String author, @NotNull String publisher, @NotNull PrintType printType, @Nullable String category) {
+        this.title = title;
+        this.author = author;
+        this.publisher = publisher;
+        this.printType = printType;
+        this.category = category;
     }
 
     public String getTitle() {
@@ -38,27 +43,7 @@ public class VolumesRequest {
     }
 
     public String getCategory() {
-        return category.getString();
-    }
-
-    public void setTitle(@NotNull String title) {
-        this.title = title;
-    }
-
-    public void setAuthor(@NotNull String author) {
-        this.author = author;
-    }
-
-    public void setPublisher(@NotNull String publisher) {
-        this.publisher = publisher;
-    }
-
-    public void setPrintType(@NotNull PrintType printType) {
-        this.printType = printType;
-    }
-
-    public void setCategory(@NotNull String category) {
-        this.category = category;
+        return category;
     }
 
     public boolean isValid() {

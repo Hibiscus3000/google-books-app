@@ -1,6 +1,5 @@
 package ru.nsu.fit.g20203.sinyukov.googlebooksapp.viewmodel;
 
-import android.nfc.Tag;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -23,8 +22,11 @@ public class VolumesViewModel extends ViewModel {
     private static final String TAG = "VolumesViewModel";
 
     private final MutableLiveData<VolumesRequest> volumesRequest = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> noResults = new MutableLiveData<>(false);
+    private final MutableLiveData<Boolean> endOfPaginationReached = new MutableLiveData<>(false);
+    private final MutableLiveData<Boolean> errorOccurred = new MutableLiveData<>(false);
 
-    private Pager<Integer, Volume> pager;
+    private final Pager<Integer, Volume> pager;
 
     public VolumesViewModel(PagingSourceFactory<?> pagingSourceFactory) {
         pager = new Pager<>(
@@ -50,5 +52,35 @@ public class VolumesViewModel extends ViewModel {
         }
         Log.i(TAG, "New request: " + volumesRequest);
         this.volumesRequest.postValue(volumesRequest);
+    }
+
+    public void setNoResults(boolean b) {
+        noResults.postValue(b);
+    }
+
+    public void setEndOfPaginationReached(boolean b) {
+        endOfPaginationReached.postValue(b);
+    }
+
+    public void setErrorOccurred(boolean b) {
+        errorOccurred.postValue(b);
+    }
+
+    public LiveData<Boolean> getNoResultsLiveData() {
+        return noResults;
+    }
+
+    public LiveData<Boolean> getEndOfPaginationReachedLiveData() {
+        return endOfPaginationReached;
+    }
+
+    public LiveData<Boolean> getErrorOccurredLiveData() {
+        return errorOccurred;
+    }
+
+    public void clear() {
+        noResults.postValue(false);
+        endOfPaginationReached.postValue(false);
+        errorOccurred.postValue(false);
     }
 }

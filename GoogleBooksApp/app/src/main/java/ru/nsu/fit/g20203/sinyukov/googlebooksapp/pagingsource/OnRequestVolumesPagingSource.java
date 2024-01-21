@@ -39,6 +39,7 @@ public class OnRequestVolumesPagingSource<T extends SourceType> extends VolumesP
     @Override
     public Integer getRefreshKey(@NonNull PagingState<Integer, Volume> pagingState) {
         final Integer anchorPosition = pagingState.getAnchorPosition();
+
         if (null == anchorPosition) {
             return null;
         }

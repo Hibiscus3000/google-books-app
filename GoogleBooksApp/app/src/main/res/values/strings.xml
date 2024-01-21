@@ -9,4 +9,10 @@
     <string name="booksPrintType">Books</string>
     <string name="magazinesPrintType">Magazines</string>
     <string name="searchAction">Search</string>
+    <string name="category">Category</string>
+    <string name="queryPrompt">Enter your query</string>
+    <string name="noResultsQuery">No results, try something different</string>
+    <string name="endOfPagination">End of pagination reached</string>
+    <string name="networkError">Network error occurred</string>
+    <string name="clearAction">Clear Query</string>
 </resources>
